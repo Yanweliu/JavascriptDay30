@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Drum(按键keydown事件)</title>
-    <link href="style.css">
+    <link rel="stylesheet"  href="style.css">
+
+<!-- 记得加上rel属性，rel想当于介绍人，告诉你href的是什么东西，否则css不会加载 -->
+
 </head>
 <body>
     <div class="keys">
@@ -27,7 +30,7 @@
         <div data-key="72" class="key">
             <kbd>h</kbd><span class="sound"></span>
         </div>
-        <div data-key="774" class="key">
+        <div data-key="74" class="key">
             <kbd>j</kbd><span class="sound"></span>
         </div>
         <div data-key="75" class="key">
@@ -50,13 +53,14 @@
 
     <script>
         const keys = Array.from(document.querySelectorAll('.key'));
-        keys.forEach(key => key.addEventListener('transitioned',removeTransition));
+        keys.forEach(key => key.addEventListener('transitionend',removeTransition));//是transitionend事件，注意拼写
         window.addEventListener('keydown',playSound);
 
         function removeTransition(e){
-            e = event||e;
-            if(e.propertyName !== 'transform')return;
-            e.target.classlist.remove('playing');
+           // e = event||e;
+            if(e.propertyName !== 'transform') return;
+            e.target.classList.remove('playing');
+            //注意classList写法，L是大写否则会清除不掉playing
         }
 
         function playSound(e){
@@ -64,7 +68,7 @@
             const key = document.querySelector(`div[data-key = "${e.keyCode}"]`);
             if(!audio) return;
 
-            key.classList.add("playing");
+            key.classList.add('playing');
             audio.currentTime = 0;
             audio.play();
         }

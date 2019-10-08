@@ -6,6 +6,7 @@ html{
 body,html{
     padding: 0;
     margin: 0;
+    font-family: sans-serif;
 }
 
 .keys{
@@ -23,6 +24,7 @@ body,html{
     border-radius: .5rem;
     margin: 1em;
     font-size: 1.5rem;
+    /* rem是相对于根节点进行缩放，r是root的意思 */
     padding: 1rem .5rem;
     transition: all 0.7s ease;
     width: 10 rem;
@@ -36,4 +38,16 @@ body,html{
     transform: scale(1.1);
     border-color: aquamarine;
     box-shadow: 0 0 1rem darkcyan;
+}
+
+kbd{
+    display: block;
+    font-size: 4rem;
+}
+
+.sound{
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: .1rem;
+
 }
