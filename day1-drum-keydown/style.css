@@ -1,3 +1,39 @@
 html{
     font-size: 10px;
+    background-color: skyblue;
+}
+
+body,html{
+    padding: 0;
+    margin: 0;
+}
+
+.keys{
+    display: flex;
+    flex: 1;
+    /* flex:1 想当于  flex-grow：1 flex—shrink：1 flex—basis：0%； */
+    min-height:100vh ; 
+    /* 1vh想当于可见高度的1% */
+    align-items: center;
+    justify-content: center;
+}
+
+.key{
+    border: .4rem solid black;
+    border-radius: .5rem;
+    margin: 1em;
+    font-size: 1.5rem;
+    padding: 1rem .5rem;
+    transition: all 0.7s ease;
+    width: 10 rem;
+    text-align: center;
+    color: rgb(235, 208, 208);
+
+
+}
+
+.playing{
+    transform: scale(1.1);
+    border-color: aquamarine;
+    box-shadow: 0 0 1rem darkcyan;
 }
