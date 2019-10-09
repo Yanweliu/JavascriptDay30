@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>cssclock(动态时钟)</title>
+    <style>
+        *{margin: 0;padding: 0;}
+        body{background: cadetblue;}
+        #box{height: 400px;width: 400px;margin: 50px auto;border: whitesmoke solid 20px;border-radius: 50%;
+             background: cadetblue;box-shadow:0 0 2px 4px black ,inset 0 0 7px 4px rgb(138, 133, 133);
+             position: relative;}
+        #cen{position: absolute;height: 20px;width: 20px;top: 190px;left: 190px;border-radius: 50%;
+             background: white;box-shadow: 0 0 3px 2px black;z-index: 3;} 
+        #hour{position: absolute;height: 60px;width: 8px;top: 140px;left: 196px;background: white;
+              box-shadow: 3px -6px 4px 0px black;border-top-right-radius: 10px;border-top-left-radius: 10px;} 
+        #min{position: absolute ;height: 100px;width: 6px;top: 100px;left: 197px;background: white;
+            box-shadow: 3px -6px 4px 0px black; }
+        #sec{position: absolute;height: 140px;width: 4px;top: 60px;left:198px;background: red;
+            box-shadow: 3px -6px 4px 0px black; }  
+        #hour,#min,#sec{transform-origin: bottom;}                                           
+    </style>
+</head>
+
+<body>
+    <script>
+        window.onload = function(){
+            var hour  = document.getElementById('hour');
+            var min   = document.getElementById('min');
+            var sec   = document.getElementById('sec');
+
+            settime();
+            setInterval(settime,1000);
+
+            function settime (){
+                var date = new Date();
+                var s = date.getSeconds();
+                var m = date.getMinutes() + s/60;
+                var h = date.getHours() + m/60;
+
+                //注意字符串写法，如果引号有空格表达式将不起作用
+                //sec.style.transform = "rotate("  +s*6+ "deg)";
+
+                sec.style.transform = `rotate(${s*6}deg)`
+
+                min.style.transform = "rotate("   +m*6+ "deg)";
+                hour.style.transform = "rotate("  +h*30+ "deg)";
+               
+            }
+        }
+    </script>
+    <div id="box">
+        <div id="cen"></div>
+        <div id="hour"></div>
+        <div id="min"></div>
+        <div id="sec"></div>
+    </div>
+</body>
+</html>
