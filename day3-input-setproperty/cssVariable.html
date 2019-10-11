@@ -8,19 +8,67 @@
 </head>
 
 <body>
-    <h2>update css variables with<span class="h1">Js</span></h2>
+    <h2>update css variables with<span class="h1"> Js</span></h2>
 
     <div class="controls">
-        <laber for="spacing">spacing</laber>
-        <input id="spacing" name="spacing" type="rage"  min="10" max="200" value="10" data-sizing="px">
+        <label for="spacing">spacing</label>
+        <input id="spacing" name="spacing" type="range"  min="10" max="240" value="10" data-sizing="px">
 
         <label for = "blur">blur</label>
-        <input type="rage" id="blur" name="blur" min="0" max="25" value="10" data-sizing="px">
+        <input type="range" id="blur" name="blur" min="0" max="25" value="10" data-sizing="px">
 
         <label for="color">color</label>
         <input type="color" id="color" name="base"  value="skyblue"  >
     </div>
 
-    <img src="day3-input-setproperty\rotate2.jpg"
+    <img src="rotate2.jpg">
+
+    <style>
+        :root{
+            --base: skyblue;
+            --spacing: 10px;
+            --blur: 10px;
+        }
+
+        img{
+            /* CSS 变量是由CSS作者定义的实体，其中包含要在整个文档中重复使用的特定值。
+            使用自定义属性来设置变量名，并使用特定的 var() 来访问。（比如  color: var(--main-color);）。 */
+            padding: var(--spacing);
+            background: var(--base);
+            filter: blur(var(--blur)); 
+            /* 注意是filter 的 blur（） 方法值，是带上括号的，不带括号失效 */
+        }
+
+        body{
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: 100;
+            font-size: 50px;
+        }
+        .controls{
+            margin-bottom: 50px;
+        }
+
+        input{
+            width: 100px;
+        }
+    </style>
+
+    <script>
+        const inputs = document.querySelectorAll('.controls input');
+
+        function update(){
+            const suffix = this.dataset.sizing || '';
+            document.documentElement.style.setProperty(`--${this.name}`,this.value +suffix);
+            //为一个css选择器添加属性对，document.documentElement是说文档根元素
+            // :root 这个 CSS 伪类匹配文档树的根元素。对于 HTML 来说，:root 表示 <html> 元素，
+        }
+
+        inputs.forEach(input => input.addEventListener('change',update));
+        inputs.forEach(input => input.addEventListener('mousemove',update));
+
+
+    </script>
+
 </body>
 </html>
