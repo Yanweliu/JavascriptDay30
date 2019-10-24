@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>learnArray</title>
+</head>
+
+<!-- 
+    学习array的方法，以及衍生方法。好记性不如烂笔头
+    1.filter()为每一个元素调用一次括号内的函数进行筛选，利用callback返回true或者等价于true的元素创建数组
+      在调用filter后再添加到数组中的数，不会被遍历
+    2.map（）为原来的数组创建一个新数组，其中原数组的每一个元素都会调用括号内提供的函数
+      传入三个参数  数组元素，数组索引，原数组本身
+      map不修改原数组本身，第一次调用前就已经确定好原数组，var numbers = 【4，9】，var roots = nummbers.map(Math.sqrt)
+    3.补充：箭头函数
+          1.js存在变量提升，function最高，而箭头函数定义函数的时候一般这样：  var aa = () => {console.log('aa')};
+          而var定义的函数不能得到提升，故定义要在调用前
+                var aa = ()=>{console.log('aa')};
+                    aa();   //如果顺序反过来，报错 aais not a function 
+          2.箭头函数不能当做构造器，不能被new出object 
+          3.箭头函数不会创建自己的this,它只会从自己的作用域链的上一层继承this，减少额外的绑定
+          4.返回对象字面量时，箭头函数要加上（） 否则会被看成属性对
+                var fun = （）=> ({name: liu})
+
+ -->
+<body>
+    
+</body>
+</html>
