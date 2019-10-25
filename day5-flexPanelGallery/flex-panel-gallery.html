@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>flex实现面板库动画</title>
+    <!-- toggleclass的用法
+     google： toggle between adding and removing a class name from an element with JavaScript.
+     也就是说toggle（）可以添加和移除class selector
+    
+    总构思
+    flex布局五个长条图片，并排五列，flex属性默认是row方向，
+    每个长条图片竖直方向上有字，上下两端字点击图片弹出，不点隐藏。flex column方向，多轴线用align-content：center
+    单条轴线 align-item justify-content center-->
+    <style>
+        html {
+            box-sizing: border-box;
+            background: #ffc600;
+            font-family: 'helvetica neue';
+            font-size: 20px;
+            font-weight: 200;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        *,
+        *:before,
+        *:after {
+            box-sizing: inherit;
+        }
+
+        /* 杂七杂八的伪选择器都给他应用border-box格式，不过这里好像没有 */
+
+        .panels {
+            min-height: 100vh;
+            overflow: hidden;
+            display: flex;
+            /* 默认row水平方向排布，不加是上下五行。加完flex是左右五列 */
+        }
+
+        .panel {
+            flex: 1;
+            /* flex简写的第一个属性是flex-grow，默认0，是1的话所有项目平分 */
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            /*横轴数轴内容都center*/
+            text-align: center;
+            /* align-items: center; */
+            background-size: cover;
+            background-position: center;
+            /* 给panel添加动画，当点击时，放大，字体放大 */
+            transition: 
+                font-size 0.7s cubic-bezier(0.61, -0.19, 0.7, -0.11),
+                flex 0.7s cubic-bezier(0.61, -0.19, 0.7, -0.11),
+                background 0.2s;
+        }
+        /*定义flex-item  */
+        .panel > * {
+            margin: 0;
+            width: 100%;
+            transition: transform 0.5s;
+            flex: 1 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* align-content定义了多根轴线的对齐方式只有一根不起作用 */
+        }
+        .panel p {
+            text-transform: uppercase;
+            font-family: 'Amatic SC', cursive;
+            text-shadow: 0 0 4px rgba(0, 0, 0, 0.72), 0 0 14px rgba(0, 0, 0, 0.45);
+            /* 可以添加多个阴影给文本，用逗号隔开 */
+            font-size: 2em;
+        }
+        .panel p:nth-child(2) {
+            font-size: 4em;
+        }
+        /* 添加toggle转换类，用来绑定click事件， */
+        .panel.open{
+            flex: 5;
+            font-size:40px;
+        }
+        .panel > *:first-child{transform: translateY(-100%);}
+        /* 设置布局 */
+        .panel > *:last-child{transform: translateY(100%);}
+
+        .panel.open-active > *:first-child{transform: translateY(0);}
+        /* 设置动画 */
+        .panel.open-active> *:last-child{transform: translateY(0);}
+
+        .panel1 {
+            background-image: url(https://source.unsplash.com/gYl-UtwNg_I/1500x1500); }
+        .panel2 {
+            background-image: url(https://source.unsplash.com/rFKUFzjPYiQ/1500x1500);}
+        .panel3 {
+            background-image: url(https://images.unsplash.com/photo-1465188162913-8fb5709d6d57?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&cs=tinysrgb&w=1500&h=1500&fit=crop&s=967e8a713a4e395260793fc8c802901d);
+            }
+        .panel4 {
+            background-image: url(https://source.unsplash.com/ITjiVXcwVng/1500x1500); }
+        .panel5 {
+            background-image: url(https://source.unsplash.com/3MNzGlQM7qs/1500x1500);}
+    </style>
+</head>
+
+
+
+<body>
+    <div class="panels">
+        <div class="panel panel1">
+            <p>Hey</p>
+            <p>Let's</p>
+            <p>Dance</p>
+        </div>
+        <div class="panel panel2">
+            <p>Give</p>
+            <p>Take</p>
+            <p>Receive</p>
+        </div>
+        <div class="panel panel3">
+            <p>Experience</p>
+            <p>It</p>
+            <p>Today</p>
+        </div>
+        <div class="panel panel4">
+            <p>Give</p>
+            <p>All</p>
+            <p>You can</p>
+        </div>
+        <div class="panel panel5">
+            <p>Life</p>
+            <p>In</p>
+            <p>Motion</p>
+        </div>
+    </div>
+
+
+    <script>
+        const panels = document.querySelectorAll('.panel');
+
+        function togbig (){
+            this.classList.toggle('open');
+        }
+        function togsmall(e){
+            console.log(e.propertyName);
+            if(e.propertyName.includes('flex'))
+           { this.classList.toggle('open-active');}
+        }
+        panels.forEach(panel => panel.addEventListener('click',togbig));
+        panels.forEach(panel => panel.addEventListener('transitionend',togsmall));
+    </script>
+
+</body>
+
+</html>
