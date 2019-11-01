@@ -13,7 +13,12 @@
     总构思
     flex布局五个长条图片，并排五列，flex属性默认是row方向，
     每个长条图片竖直方向上有字，上下两端字点击图片弹出，不点隐藏。flex column方向，多轴线用align-content：center
-    单条轴线 align-item justify-content center-->
+    单条轴线 align-item justify-content center
+
+    另外关于css3的 transition 和 animation 属性再记录一下   transition是过渡属性，animation是动画属性
+           transition是transition-property，transition-duration，time-function，time-dely的简写，
+           是给一个css属性定义的变化时间，如从width 100px 到width 200px
+           animation是给一个动画定义的属性，需要用到@keyframes 来定义动画名字-->
     <style>
         html {
             box-sizing: border-box;
@@ -91,7 +96,7 @@
         .panel > *:last-child{transform: translateY(100%);}
 
         .panel.open-active > *:first-child{transform: translateY(0);}
-        /* 设置动画 */
+        /* 设置过渡 */
         .panel.open-active> *:last-child{transform: translateY(0);}
 
         .panel1 {
