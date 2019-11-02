@@ -1,0 +1,65 @@
+html{
+    box-sizing: border-box;
+    background: #adf4f7;
+    font-size: 20px;
+    font-weight: 200;
+}
+
+*,*:before,*:after{
+    box-sizing: inherit;
+}
+
+input{
+    width: 100%;
+    padding: 20px;
+}
+
+.search-form{
+    max-width: 400px;
+    margin: 50px auto;
+}
+
+h1{
+  background: #efe9f0;  
+}
+
+input.search{
+    margin: 0;
+    text-align: center;
+    border: 2px solid rgb(247, 250, 249);
+    border-radius: 5px;
+    width: 120%;
+    left: -10%;
+    position: relative;
+    top: 10px;
+    z-index: 2;
+    font-size: 40px;
+    box-shadow: 0 0 5px slategrey, inset 0 0 5px slategray;
+}
+
+.suggestion{
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+.suggestion li{
+    background: white;
+    list-style: none;
+    border-bottom: 2px solid grey;
+    box-shadow: 0 0 4px silver;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    transition: background 0.2s;
+}
+
+.suggestion li:nth-child(odd){
+    transform: perspective(100px) rotateX(-3deg) rotateY(2deg); 
+    background: linear-gradient(to bottom,  #ffffff 0%,#EFEFEF 100%);
+}
+.suggestion li:nth-child(even){
+    transform:  perspective(100px) rotateX(3deg) rotateY(2deg);
+    background: linear-gradient(to top,  #ffffff 0%,#EFEFEF 100%);
+
+}

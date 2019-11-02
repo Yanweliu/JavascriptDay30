@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>promise对象和regexp的使用</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+
+<body>
+    <form class="search-form">
+        <input type="text" class="search" placeholder="City or state">
+        <ul class="suggestion">
+            <li>filter for a city</li>
+            <li>or a state </li>
+        </ul>
+    </form>
+
+<!-- 目的是input框中输入或者改变城市名字时，下面的列表会对应改变
+    1. 首先从json获取城市数据，并且变成城市数组，fetch异步获json响应，json（）获取内容，push(...data)到数组中
+    2. 而后给input框添加事件监听，即change和keyup事件时，要调用的匹配方法
+    3. 定义方法，输入城市参数，在城市数组中找对应城市，用到regexp匹配 -->
+    <script>
+        const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json'
+        const cities = [];
+        fetch (endpoint).then(obj => obj.json()).then(data => cities.push(...data));
+       // console.log(cities);
+
+        const searchInput = document.querySelector('.search');
+        const suggestion = document.querySelector('.suggestion');
+        searchInput.addEventListener('change',displayMatches);
+        searchInput.addEventListener('keyup',displayMatches);
+
+
+        // 先单独考虑city 或者state的事，先初筛选，选出包含city或者state的数组，之后再次筛选
+        function findMatches(wordToMatch,cities){
+            return cities.filter(place =>{
+                 const regex = new RegExp(wordToMatch,'gi');
+            return place.city.match(regex) || place.state.match(regex);
+             });
+        }
+
+        // 选出city 和 state 包含的wordToMatches
+
+        function displayMatches(){
+            const matchArray = findMatches(this.value,cities);
+            const html = matchArray.map(place =>{
+                 const regex = new RegExp(this.value,'gi');
+                 const matchCity = place.city.replace(regex,`<span class = "h1">${this.value}</span>`);
+                 const matchState = place.state.replace(regex,`<span class = "h1">${this.value}</span>`);
+                // console.log(matchState);
+                //注意，return 和`要紧挨着，否则return   直接解析成空，什么也不返回
+                 return`
+                  <li>
+                    <span class = "name"> ${matchCity},${matchState}</span>
+                  </li>
+                 `;
+            }).join('');
+           
+            suggestion.innerHTML = html;
+        }
+
+  </script>
+</body>
+</html>
