@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>canvas实现绘画板</title>
+</head>
+<body>
+    <canvas id="draw" height="800" width="800"></canvas>
+    <script>
+        const canvas= document.querySelector("#draw");
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+//设置标志
+        let isDrawing = false;
+        let lastX = 0;
+        let lastY = 0;
+        let hue = 0;
+        let hue1 = 0;
+        let direction = true;
+
+
+        ctx.lineWidth = 90;//设置画笔粗细
+        ctx.lineJoin = 'round';//设置两条线相交时为圆形
+        ctx.lineCap = 'round';//绘制圆形的结束线帽
+        ctx.strokeStyle = "blue";
+
+//开始定义绘画函数
+        function draw(e){
+            if(!isDrawing) return;
+            console.log(e);
+            ctx.beginPath();
+            ctx.moveTo(lastX,lastY);
+            ctx.lineTo(e.offsetX,e.offsetY);
+            ctx.stroke();
+            [lastX,lastY] = [e.offsetX,e.offsetY];
+
+            //根据hsl（更牛逼的颜色模式）（这是什么颜色？深浅如何？明暗如何？）实现变色
+            ctx.strokeStyle = `hsl(${hue},100%,50%,${hue1})`;
+            hue++;
+            if(hue >= 360){hue = 0;}
+
+            
+            //定义水墨效果
+            // if(hue1 < 0.7){hue1 = hue1 +0.1;}else{hue1 = 0.3}
+            if(hue1 > 0.7){hue1 = 0.3}else{hue1 += 0.1;}//设置的opacity，hsl中额外的第四个参数
+            
+
+            //改变canvas的粗细
+            if(ctx.lineWidth >= 100||ctx.lineWidth <= 1){direction = !direction;}
+            if(direction){ctx.lineWidth++;}else{ctx.lineWidth--;}
+
+        }
+
+        canvas.addEventListener('mousedown',(e)=>{
+            isDrawing = true;
+            [lastX,lastY] = [e.offsetX,e.offsetY];
+        });
+        canvas.addEventListener('mousemove',draw);
+        canvas.addEventListener('mouseup',()=>isDrawing = false);
+        canvas.addEventListener('mouseout',()=>isDrawing = false);
+
+
+    </script>
+    <style>
+        html,body{
+            margin: 0;
+        }
+    </style>
+</body>
+</html>
