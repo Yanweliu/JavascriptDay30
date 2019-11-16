@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>控制台调试技巧</title>
+</head>
+<body>
+    <p onclick="makeGreen()">沙雕对面</p>
+
+    <script>
+        const dogs = [{ name: 'Snickers', age: 2},{name: 'hugo', age: 8 }];
+
+        function makeGreen(){
+            const p = document.querySelector('p');
+            p.style.color = 'blue';
+            p.style.font= '50px';
+        }
+
+        //regular
+        console.log('hello');
+
+        //interpolated
+        console.log('hello i am a %s string!','💩');
+        console.log('%c I am some great text',
+        'font-size:50px;background:red;text-shadow:10px 10px 0 blue');
+        
+        //waring
+        console.warn('o fuck');
+        //error
+        console.error('Shit!');
+        //info
+        console.info('去你妈的，该死哪死哪里去，别他妈搁着里秀');
+        //text(assert 断言)
+        const p = document.querySelector('p');
+        console.assert(p.classList.contains('沙雕'),'wrong');
+        //cleaing
+        console.clear();
+
+        //group together分组显示
+        dogs.forEach(dog=>{
+            console.groupCollapsed(`${dog.name}`);
+            console.log(`this is ${dog.name}`);
+            console.log(`${dog.name} is ${dog.age}`);
+            console.groupEnd(`${dog.name}`);
+        });
+        
+        //counting
+        console.count('wes');
+        console.count('wes');
+        console.count('wes');
+        console.count('wes');
+        console.count('wes');
+        console.count('wees');
+        console.count('wers');
+        
+        //timing
+        console.time('fetching data');
+        fetch('https://api.github.com/users/Yanweliu')
+            .then(data => data.json())
+            .then(data =>{
+                console.timeEnd('fetch my data');
+                console.log(data);
+            })
+        //表格输出
+        console.table(dogs);
+        
+    </script>
+</body>
+</html>
