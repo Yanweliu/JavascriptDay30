@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>按住shift连续选择checkbox</title>
+
+    <!--    When a user clicks a checkbox, holds Shift, 
+            and then clicks another checkbox a few rows down,
+            all the checkboxes inbetween those two checkboxes should be checked.
+    -->
+
+</head>
+<body>
+    <style>
+        html{
+            font-family: 'Courier New', Courier, monospace;
+            background: #cbf3f8
+        }
+        .inbox{
+            max-width: 400px;
+            margin:  40px auto;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 10px 10px 3px #d3cece;
+        }
+        .item{
+            display: flex;
+            align-items: center;
+            /* align-content: center;align-content定义了多根交叉轴线
+            （竖直方向）的对齐方向，只有一个交叉轴不起作用 */
+            border-bottom: 1px solid gainsboro;
+        }
+        input:checked + p{
+            text-decoration: line-through;
+            /* 选择紧接在另一个元素后的元素，
+            而且二者有相同的父元素，
+            可以使用相邻兄弟选择器 */
+        }
+        input[type="checkbox"]{margin: 20px;}
+        p{
+            margin: 0;
+            padding: 20px;
+            font-size: 20px;
+            border-left: #cbf3f8 1px solid;
+            flex: 1;
+        }
+    </style>
+
+    <div class="inbox">
+        <div class="item">
+            <input type="checkbox">
+            <p>假装这是一个邮箱</p>
+        </div>
+
+        <div class="item">
+            <input type="checkbox">
+            <p>选中一个</p>
+        </div>
+
+        <div class="item">
+            <input type="checkbox">
+            <p>然后按住shift键</p>
+        </div>
+
+        <div class="item">
+            <input type="checkbox">
+            <p>然后选中另一个</p>
+        </div>
+
+        <div class="item">
+            <input type="checkbox">
+            <p>他们之间所有的CheckBox都会被选中</p>
+        </div>
+
+        <div class="item">
+            <input type="checkbox">
+            <p>就是选中两个实现选中多个</p>
+        </div>
+    </div>
+
+
+    <script>
+        const checkboxes = document.querySelectorAll('.inbox input[type = "checkbox"]');
+        let lastChecked;
+
+        function handleCheck(e){
+          //  e = e||event;
+            let inbetween = false;
+            if(e.shiftKey && this.checked){
+
+                checkboxes.forEach(checkbox =>{
+                    if(checkbox === this || checkbox === lastChecked){
+                        //第一次点击CheckBox后，inbetween已经变成了true
+                        //之后的每个checkbox变成checked：true
+                        // 直到再次点击，又触发handleCheck函数，lastchecked再次变成false
+                        inbetween = !inbetween;
+                        console.log('Start checking ');
+                }
+                    if(inbetween){
+                        checkbox.checked = true;
+                        }
+                    }
+                )
+
+            }
+
+            lastChecked = this;//作用：第二次点击时改变inbetween值
+        }
+
+
+
+        checkboxes.forEach(checkbox => checkbox.addEventListener('click',handleCheck));
+
+    </script>
+</body>
+</html>
