@@ -1,0 +1,156 @@
+html{box-sizing: border-box;}
+*,*::before,*::after{box-sizing: inherit;}
+body{margin: 0;padding: 0;min-height: 100vh;display: flex;
+    align-items: center;justify-content: center;
+    background:linear-gradient(135deg,#b3e738 0%,#52e5f0 50%,#59ec65 100%);}
+
+.player{
+    max-width: 750px;
+    border: 5px solid rgba(0, 0, 0,0.2);
+    box-shadow: 0 0  20px rgb(18, 9, 51);
+    position: relative;
+    font-size: 0;
+    overflow: hidden;
+}
+.player:fullscreen {
+    max-width: none;
+    width: 100%;
+  }
+  
+  .player:-webkit-full-screen {
+    max-width: none;
+    width: 100%;
+  }
+  
+  .player__vedio {
+    width: 100%;
+  }
+  .player_button{
+      background: none;
+      border: 0;
+      line-height: 1;
+      color: rgb(146, 192, 245);
+      text-align: center;
+      padding: 0;
+      cursor: pointer;
+      max-width: 50px;
+  }
+  .player_button:focus{
+      color: black;
+  }
+  .player__slider{   
+      width: 60px;
+      height: 10px;
+  }
+  .player_controls{
+      display: flex;
+      position: absolute;
+      flex-wrap: wrap;
+      width: 100%;
+      bottom: 0;
+      background: white;
+      transform: translateY(100%) translateY(-5px);
+      transition: all 0.3s;
+      bottom: 0;
+  }
+  .player:hover .player_controls{
+      transform: translateY(0);
+  }
+  .player:hover .progress{
+      height: 15px;
+  }
+  .player_controls > *{
+      flex: 1;
+  }
+  /*flex取值为一个非负的值时：则该数值是flex-grow(拉伸长度)的值。flex-shrink: 1， flex-basis(宽度): 0；即为： num 1 0%;
+
+    flex取值是一个长度或百分比 60%，200px：则该数值是flex-basis的值。取值（ 1 1 60%）（ 1 1 200px）；*/
+
+  .progress{
+      flex: 10;
+      display: flex;
+      background: yellowgreen;
+      position: relative;
+      flex-basis: 100%;
+      height: 5px;
+      transition: height 0.3s;
+      cursor: ew-resize;
+  }
+
+
+
+/*flex 默认值 auto代表 (1 1 auto) 和 none (0 0 auto)。flex-grow代表索取的剩余宽度
+flex:1代表 flex-grow: 1; flex-shrink: 1;flex-basis: 0%;
+flex: 0 代表 flex-grow: 0; flex-shrink: 1;flex-basis: 0%;
+flex-basis: 0 和 flex-basis: auto  auto是适应content，0和0%效果相同
+如果flex-basis的值为auto，那么flex item的宽度由width属性决定；如果没有设置width，flex item的宽度由它的内容决定；
+如果flex-basis值在max-width和min-width之间，flex-basis决定宽度；
+如果flex-basis大于max-width，则宽度为max-width；
+如果flex-basis小于min-width，则宽度为min-width；
+这里会出现过大内容的问题，如果flex item的内容宽度很宽，会使flex item的宽度也变大；
+（很多布局中都会出现超长字符或者超大内容撑大布局的问题）；
+  */
+  .progress_filled{
+
+      /*测试一，设置width后单独设置flex-basis:auto,width起作用  */
+       /* 
+       width: 50%;
+       background: #d4f782;
+       flex-basis: auto; 
+     */
+
+    /* 测试二，设置flex-basis值后，再设置width值，flex-basis优先级高*/
+         
+         /* background: #d4f782;
+         flex-basis: 50%; 
+          width: 10%; */
+    
+
+     /* 测试三，先设置flex：auto，之后单独设置flex-basis值,(1,1,auto),flex-grow把剩余50%索取，覆盖掉basis50%设定 */
+     /* background: #edf0e6;
+     flex: auto; 
+     flex-basis: 50%; */
+
+     /* 测试四，先设置flex：0，之后单独设置flex-basis值 */
+     width: 50%;
+     background: #edf0e6;
+     flex: 0; 
+     flex-basis: 50%;
+     
+  }
+
+  input[type=range]{
+      -webkit-appearance: none;
+      background: transparent;
+      width: 100%;
+      margin: 0 5px;
+  }
+  input[type = range]:focus{
+    outline: none;
+  }
+
+  /* 滑动槽的设定 */
+  input[type=range]::-webkit-slider-runnable-track{
+    width: 100%;
+    height: 8.4px;
+    cursor: pointer;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0), 0 0 1px rgba(13, 13, 13, 0);
+    background: rgba(255,255,255,0.8);
+    border-radius: 1.3px;
+    border: 0.2px solid rgba(1, 1, 1, 0);
+  }
+  /* 滑动块的设置 */
+  input[type=range]::-webkit-slider-thumb {
+    height: 15px;
+    width: 15px;
+    border-radius: 50px;
+    background: #ffc600;
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -3.5px;
+    box-shadow:0 0 2px rgba(0,0,0,0.2);
+  }
+  
+  input[type=range]:focus::-webkit-slider-runnable-track {
+    background: #bada55;
+  }

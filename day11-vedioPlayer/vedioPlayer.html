@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>html改进版播放器</title>
+    <link rel="stylesheet" href = "style.css">
+</head>
+
+<body>
+      
+
+    <div class="player">
+        <video class="player_vedio  viewer" src="652333414.mp4"></video>
+
+        <div class="player_controls">
+            <div class="progress">
+                <div class="progress_filled"></div>
+            </div>
+
+            <button class="player_button toggle" title="Toggle Play">►</button>
+            <input type="range" name="volume" class="player_slider" min="0" max="1" step="0.05" value="1">
+            <input type="range" name="playbackRate" class="player_slider"   min="0.5" max="2" step="0.1" value="1">
+            <button data-skip="-10" class="player_button" ><< -10s</button>
+            <button data-skip="10" class="player_button" > +10s >></button>
+        </div>
+    </div>
+
+    <script>
+            const player = document.querySelector('.player');
+            const video = player.querySelector('.viewer');
+            const progress = player.querySelector('.progress');
+            const progressBar = player.querySelector('.progress_filled');
+            const toggle = player.querySelector('.toggle');
+            const skipButtons = player.querySelectorAll('[data-skip]');
+            const ranges = player.querySelectorAll('.player_slider');
+    
+    
+    // 确定功能 点击（按钮，界面）播放  点击播放时按钮要切换  进度条要随着改变  拖动进度条也要改变
+    //         音量模块、速度模块滑动改变video属性  
+    
+            //1.播放功能
+            function togglePlay(){
+                const method = video.paused? 'play':'pause';
+                video[method]();
+            }
+            video.addEventListener('click',togglePlay);
+            toggle.addEventListener('click',togglePlay);
+    
+            //2.按钮切换功能
+            function updateButton (){
+                const  icon = video.paused? '►':'▎▎';
+                console.log(icon);
+                toggle.textContent = icon;
+            }
+            toggle.addEventListener('click',updateButton);
+    
+            //3.进度条随着改变
+            function handleProgress(){
+                const percent = (video.currentTime/video.duration)*100;
+                console.log(progressBar);
+                progressBar.style.flexBasis = ` ${percent}% `;
+            }
+            video.addEventListener('timeupdate',handleProgress);
+
+            //4.拖动和点击进度条改动视频
+            function scrub(e){
+                const newTime = (e.offsetX / progress.offsetWidth)*video.duration;
+                video.currentTime = newTime;
+            }
+            progress.addEventListener('click',scrub);
+
+            //设定拖动进度条，而不是单单mousemove 还要有mouseup和mousedown事件
+            let flag = false;
+            //let是变量，const是常量。如果设置成const，将不会随着鼠标移动而动，mousemove触发频率很高，进度条跟不上
+            progress.addEventListener('mousemove',(e) => flag && scrub(e));
+            progress.addEventListener('mouseup',() =>flag = false );
+            progress.addEventListener('mousedown',() =>flag = true );
+
+
+            //5.根据input设置的和video相同的属性值来改变video的volume和playbackRate
+            function handleUpdate(){
+                video[this.name] = this.value;
+                console.log(video[this.name]);
+                
+            }
+            ranges.forEach(range=>range.addEventListener('change',handleUpdate));
+            ranges.forEach(range=>range.addEventListener('mousemove',handleUpdate));
+
+            //6.实现快进快退功能
+            function skip(){
+                video.currentTime += parseFloat(this.dataset.skip);
+            }
+            skipButtons.forEach(bu=> bu.addEventListener('click',skip));
+        </script>
+
+
+</body>
+</html>
