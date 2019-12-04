@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>键盘按顺序验证匹配</title>
+    <script type="text/javascript" src="https://www.cornify.com/js/cornify.js"></script>
+</head>
+
+<body>
+    <script>
+        const pressed = [];
+        const secretWords = 'xueli';
+
+        //保证字数一样，并且顺序一样
+        //join() 方法用于把数组中的所有元素放入一个字符串。
+        //splice()从数组中添加或删除项目，然后返回被删除的项目，会改变原始数组
+        //arrayObject.splice(index,howmany,item1,,,,item2) ,index使用负数就是从数组结尾到开头，howmany为0，表示不删除
+        window.addEventListener('keyup',(e) => {
+            console.log(e.key);
+            pressed.push(e.key);
+            pressed.splice(-secretWords - 1, pressed.length - secretWords.length);
+            if(pressed.join('').includes(secretWords)){
+                console.log('Ding Ding!');
+                cornify_add();
+            }
+                console.log(pressed);
+        });
+    </script>
+</body>
+</html>
